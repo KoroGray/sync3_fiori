@@ -1,0 +1,43 @@
+<mvc:View controllerName="exam.exprogram05.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" displayBlock="true">
+    <Page showNavButton="true" navButtonPress="onBack" id="detail" title="">
+        <Table id="idDetailTable"
+            inset="false"
+            items="{ path: '/Order_Details_Extendeds'}"
+            mode="SingleSelectMaster" 
+            selectionChange="onSelectionChange">
+            <columns>
+                <Column>
+                    <Text text="주문 ID" />
+                </Column>
+                <Column>
+                    <Text text="상품 이름" />
+                </Column>
+                <Column>
+                    <Text text="상품 금액" />
+                </Column>
+                <Column>
+                    <Text text="수량" />
+                </Column>
+                <Column>
+                    <Text text="할인율" />
+                </Column>
+                <Column>
+                    <Text text="총 금액" />
+                </Column>                
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>                                           
+                        <Text text="{OrderID}" />
+                        <Text text="{ProductName}" />
+                        <Text text="{UnitPrice}" />
+                        <Text text="{Quantity}" />
+                        <Text text="{Discount}" />
+                        <Text text="{ExtendedPrice}" />    
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>                                                 
+    </Page>
+</mvc:View>
