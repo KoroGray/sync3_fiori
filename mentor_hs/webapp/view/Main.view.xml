@@ -1,0 +1,128 @@
+<mvc:View controllerName="mentor.mentorhs.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:m="sap.m" xmlns="sap.uxap" xmlns:core="sap.ui.core" xmlns:fb="sap.ui.comp.filterbar">
+    <ObjectPageLayout id="ObjectPageLayout" useIconTabBar="true" upperCaseAnchorBar="false">
+		<headerTitle>
+			<ObjectPageHeader objectTitle="Section sample">
+			</ObjectPageHeader>
+		</headerTitle>
+
+		<headerContent>
+			<!-- <m:Input width="200px" placeholder="Customer ID" showValueHelp="true" value="{Main>/CustomerID}" valueHelpRequest="onValueHelp"/>
+            <m:Button width='100px' type="Emphasized" text="Search" press="onSearch"/> -->
+            <fb:FilterBar id="filterbar" filterContainerWidth="24rem" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem name="CustomerID" label="Customer ID" groupName="Group1" visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input  id="productInput"
+                            value="{main>/CustomerID}"
+                            showValueHelp="true"
+                            valueHelpRequest=".onValueHelp"
+                            placeholder="Enter CustomerID"
+                            showSuggestion="true"
+                            suggest=".onSuggest"
+                            suggestionItems="{/Customers}" >
+                                <m:suggestionItems>
+                                    <core:Item text="{CustomerID}" />
+                                </m:suggestionItems>
+                            </m:Input>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+		</headerContent>
+
+		<sections>
+			<ObjectPageSection titleUppercase="false" title="Section 5">
+				<subSections>
+					<ObjectPageSubSection titleUppercase="false">
+						<blocks>
+								<m:Table id="idTable" mode="SingleSelectMaster" selectionChange="onSelectionChange"
+                                    inset="false"
+                                    items="{
+                                        path: '/Orders',
+                                        filters : [{
+                                            path : 'CustomerID'
+                                        }]                       
+                                    }">
+                                <m:headerToolbar>
+                                    <m:OverflowToolbar>
+                                        <m:content>
+                                            <m:Title text="Products" level="H2"/>
+                                            <m:ToolbarSpacer />                                            
+                                        </m:content>
+                                    </m:OverflowToolbar>
+                                </m:headerToolbar>
+                                <m:columns>
+                                    <m:Column>
+                                        <m:Text text="OrderID" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="CustomerID" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="EmployeeID" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="OrderDate" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="RequireDate" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="ShippedDate" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Freight Sum" />
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem vAlign="Middle">
+                                        <m:cells>                                           
+                                            <m:Text text="{OrderID}" />                                                                      
+                                            <m:Text text="{CustomerID}" />                                     
+                                            <m:Text text="{EmployeeID}" />       
+                                            <!-- (JSON Model + formmatter 사용할 때 참고사항)
+                                                formatter 적용 시 one-way Binding 방식이 적용됨
+                                             -->
+                                            <m:Text text="{
+                                                path : 'OrderDate',
+                                                formatter : '.formatter.fnDateToString'
+                                                }" />                                       
+                                            <m:Text text="{
+                                                path : 'RequiredDate',
+                                                formatter : '.formatter.fnDateToString'
+                                                }" />                                      
+                                            <m:Text text="{
+                                                path : 'ShippedDate',
+                                                formatter : '.formatter.fnDateToString'
+                                                }" />    
+                                            <m:Text text="{
+                                                parts : [
+                                                    {path : 'ShipVia'}, 
+                                                    {path : 'Freight'}
+                                                ],
+                                                formatter : '.formatter.fnFreightSum'
+                                            }" />                                         
+                                        </m:cells>
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+            <ObjectPageSection titleUppercase="false" title="Section 4">
+				<subSections>
+					<ObjectPageSubSection titleUppercase="false">
+						<blocks>
+							<m:Button text="go Detail" press="onNavDetail" />
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+
+	</ObjectPageLayout>
+</mvc:View>

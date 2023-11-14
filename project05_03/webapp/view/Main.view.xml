@@ -1,0 +1,63 @@
+<mvc:View controllerName="project0503.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:t="sap.ui.table">
+    <Page id="page" title="{i18n>title}" showHeader="false" enableScrolling="false"	class="sapUiContentPadding">
+        <content>
+        <Panel>
+        	<FlexBox
+                class="sapUiSmallMargin"
+				height="100px"
+				alignItems="Center"
+				justifyContent="Center">
+                <VBox>
+                    <Input id="idInt1"/>
+                    <Select id="idSelect" width="100%" items="{/combo}">
+                        <core:Item key="{key}" text="{text}"/>
+                    </Select>
+                    <Input id="idInt2"/>
+                    <Button width="100%" text="계산" press="onCalc" type="Emphasized"/>
+                </VBox>
+			</FlexBox>
+        </Panel>    
+        <t:Table rows="{/history}" selectionMode="MultiToggle" paste="onPaste" ariaLabelledBy="title"> 
+           	<t:extension>
+				<OverflowToolbar style="Clear">
+					<Title id="title" text="Calculator History"/>
+				</OverflowToolbar>
+	    	</t:extension>
+		    <t:columns>
+				<t:Column width="auto">
+					<Label text="First Number" />
+                    <t:template>
+						<Text text="{FNUM}" wrapping="false" />
+					</t:template>
+		 	    </t:Column>
+                <t:Column width="auto">
+					<Label text="Operator" />
+                    <t:template>
+						<Text text="{OPER}" wrapping="false" />
+					</t:template>
+		     	</t:Column>
+                <t:Column width="auto">
+					<Label text="Second Number" />
+                    <t:template>
+						<Text text="{LNUM}" wrapping="false" />
+					</t:template>
+		 	    </t:Column>
+                <t:Column width="auto">
+					<Label text="Result" />
+                    <t:template>
+						<Text text="{RESULT}" wrapping="false" />
+					</t:template>
+		 	    </t:Column>
+                <t:Column width="auto">
+					<Label text="Status" />
+                    <t:template>
+						<Text text="{= ${RESULT} >= 10 ? 'Yes' : 'No' }" wrapping="false" visible="{= ${RESULT} >= 10}"/>
+					</t:template>
+		 	    </t:Column>                
+            </t:columns>
+    	</t:Table>
+        </content>
+    </Page>
+</mvc:View>

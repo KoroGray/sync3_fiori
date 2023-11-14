@@ -1,0 +1,58 @@
+<mvc:View xmlns:internal="sap.landvisz.internal" controllerName="project0504.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:t="sap.ui.table">
+    <!-- JSON Data의 Key값 기준으로 경로 설정 -->
+    <Page id="page" title="{main>/list/1/name}">
+        <content>
+            <HBox>
+                <Button press="onClick" text="Press Me!"/>
+                <Input id="idInput" value="{main>/inpValue}"/> <!-- 화면: Park Gildong-->
+                <Text text="{main>/txtValue}"/>
+            </HBox>
+            <t:Table 
+				id="idTable"
+				rows="{main>/list}" 
+				selectionMode="MultiToggle" 
+				paste="onPaste" 
+				rowActionCount="1" 
+				ariaLabelledBy="title"> 
+           	    <t:extension>
+			    	<OverflowToolbar style="Clear">
+				    	<Title id="title" text="Products"/>
+						<ToolbarSpacer />
+						<Button text="Add" icon="sap-icon://add" press="onAdd"/>
+						<Button text="Delete" icon="sap-icon://delete" press="onDelete"/>
+			    	</OverflowToolbar>
+	        	</t:extension>
+				<t:rowActionTemplate>
+					<t:RowAction>
+						<t:items>
+							<t:RowActionItem icon="sap-icon://decline" press="onRowActionItem"/>
+						</t:items>
+					</t:RowAction>
+				</t:rowActionTemplate>
+		        <t:columns>
+	    			<t:Column>
+		    			<Label text="Name" />
+                        <t:template>
+					    	<!-- <Text text="{main>name}" wrapping="false" /> -->
+							<Input value="{main>name}" />
+				    	</t:template>
+		 	        </t:Column>
+                    <t:Column>
+		    			<Label text="Age" />
+                        <t:template>
+					    	<Text text="{main>age}" wrapping="false" />
+				    	</t:template>
+		 	        </t:Column>
+                    <t:Column>
+		    			<Label text="Tel" />
+                        <t:template>
+					    	<Text text="{main>tel}" wrapping="false" />
+				    	</t:template>
+		 	        </t:Column>
+                </t:columns>
+        	</t:Table>
+        </content>
+    </Page>
+</mvc:View>

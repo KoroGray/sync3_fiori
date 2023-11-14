@@ -1,0 +1,127 @@
+<mvc:View controllerName="project0509.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.suite.ui.commons"
+	xmlns:m="sap.m" 
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:viz.data="sap.viz.ui5.data" 
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core">
+    <m:Page id="page" title="{i18n>title}">
+    	<ChartContainer
+		id="idChartContainer"
+		showFullScreen="true"
+		showPersonalization="true"
+		autoAdjustHeight="false"
+		title="Revenue">
+            <content>
+                <ChartContainerContent icon="sap-icon://SAP-icons-TNT/value-type" title="Chart Container">
+                    <content>
+                        <viz:VizFrame vizType="stacked_column"
+                                    legendVisible="true"
+                                    vizProperties="{
+                                        'title' : {
+                                            'visible' : true,
+                                            'text' : 'Sales by country'
+                                        },
+                                        'legendGroup' : {
+                                            'layout' : {'position' : 'right'}
+                                        },
+                                        'plotArea' : {
+                                            'drawingEffect' : 'glossy',
+                                            'dataLabel' : { visible: true, type: 'value'}
+                                        }
+                                    }">
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{view>/Products}">
+                                    <!-- X축 -->
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Country" value="{view>Country}" />
+                                    </viz.data:dimensions>
+
+                                    <!-- Y축 -->
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Revenue" value="{view>Revenue}" />
+                                        <viz.data:MeasureDefinition name="Revenue2" value="{view>Revenue2}" />
+                                        <viz.data:MeasureDefinition name="Revenue3" value="{view>Revenue3}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <!--
+                                uid 세팅 참고
+                                line, column, bar... => categoryAxis + valueAxis
+                                pie, donut, ... => color + size
+                            -->
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="categoryAxis" values="Country" type="Dimension"/> <!-- X축 -->
+                                <viz.feeds:FeedItem uid="valueAxis" values="Revenue" type="Measure" /> <!-- Y축 -->
+                                <viz.feeds:FeedItem uid="valueAxis" values="Revenue2" type="Measure" /> <!-- Y축 -->
+                                <viz.feeds:FeedItem uid="valueAxis" values="Revenue3" type="Measure" /> <!-- Y축 -->
+                            </viz:feeds>
+                            <viz:dependents>
+                                <viz:Popover id="idPopOver" />
+                            </viz:dependents>
+                        </viz:VizFrame>
+                    </content>
+                </ChartContainerContent>
+                <!-- <ChartContainerContent
+                    icon="sap-icon://table-view"
+                    title="Table">
+                    <content>
+                        <m:Table id="idTable" items="{view>/Products}">
+                            <m:headerToolbar>
+                                <m:OverflowToolbar >
+                                    <m:content>
+                                        <m:Title text="Products" level="H2"/>
+                                    </m:content>
+                                </m:OverflowToolbar>
+                            </m:headerToolbar>
+                            <m:columns>
+                                <m:Column>
+                                    <m:Text text="Country"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Profit"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Forcast"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Target"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Revenue"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Revenue2"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Revenue3"/>
+                                </m:Column>
+                                <m:Column>
+                                    <m:Text text="Micro"/>
+                                </m:Column>
+                            </m:columns>
+                        </m:Table>   			
+                    </content>   
+                </ChartContainerContent> -->
+            </content>         
+            <customIcons>
+                <core:Icon id="customIcon" src="sap-icon://print" tooltip="Custom Content Print" press="onCustomActionPress"></core:Icon>                   
+            </customIcons>
+            <toolbar>
+                <m:OverflowToolbar id="appToolbar">
+                    <m:Button id="btnAction1" text="CustomAction" type="Transparent" press="onCustomActionPress"></m:Button>
+                    <m:ToolbarSpacer/>
+                    <m:Button id="btnAction2" text="CustomAction" type="Transparent" press="onCustomActionPress"></m:Button>
+                    <ChartContainerToolbarPlaceholder></ChartContainerToolbarPlaceholder>
+                </m:OverflowToolbar>
+            </toolbar>
+            <dimensionSelectors>
+                <m:Select id="idSelector">
+                    <core:Item key="0" text="Sales by Country"/>
+                </m:Select>
+            </dimensionSelectors>
+    	</ChartContainer>
+    </m:Page>
+</mvc:View>

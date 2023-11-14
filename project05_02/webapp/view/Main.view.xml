@@ -1,0 +1,20 @@
+<mvc:View controllerName="project0502.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}" floatingFooter="true">
+        <content>
+            <!-- <Button text="Button Text"/> -->
+            <VBox>
+                <Button id="idBtn" text="Click" press="onClick"/>
+                <Text id="idText" text="Text"/>
+                <Input id="idInput" change="onChange" value="test"/>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button text="TEST"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

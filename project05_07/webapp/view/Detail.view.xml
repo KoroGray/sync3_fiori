@@ -1,0 +1,15 @@
+<mvc:View controllerName="odata.project0507.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" displayBlock="true">
+    <Page showNavButton="true" navButtonPress="onBack" id="detail" title="">
+        <VBox>
+            <Text text="{OrderID}" />
+            <Text text="{CustomerID}" />
+            <Text text="{EmployeeID}" />
+            <Text text="{ShipName}" />
+            <Text text="{ShipCity}" />
+            <Text text="{ShipCountry}" />
+            <Button text="전체 조회" press="onRead" />                                                            
+        </VBox>
+        <Text text="Detail Page" />
+    </Page>
+</mvc:View>
