@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="selectDialog"
+		title="제품 목록"
+        searchPlaceholder="제품명"
+		items="{value>/value}"
+		search=".onValueHelpSearch"
+		confirm=".onValueHelpClose"
+		cancel=".onValueHelpClose">
+		<StandardListItem title="{value>gdname}" />
+		<!--
+			모델명 : value
+			데이터 : {list : [...]}
+			[...] 요거를 화면에 테이블 안에다가 출력
+
+			=> {value>/list} 이걸로 전체 데이터 기준을 잡고. => items
+
+			그 안에 있는 객체 정보 중 gdname 을 상대 경로로 지정 => {value>gdname}
+			상대 경로 지정 시 맨앞에 "/"는 생략
+
+		-->
+	</SelectDialog>
+</core:FragmentDefinition>

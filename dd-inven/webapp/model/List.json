@@ -1,0 +1,74 @@
+{
+    "value": [
+        {
+            "status": "A",
+            "gdcode": "P001",
+            "gdname": "술독 하이볼 캔 레몬 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 2943,
+            "unit":"EA"
+        },
+        {
+            "status": "A",
+            "gdcode": "P002",
+            "gdname": "술독 하이볼 캔 딸기 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 0,
+            "unit":"EA"
+        },
+        {
+            "status": "A",
+            "gdcode": "P003",
+            "gdname": "술독 하이볼 캔 바나나 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 888,
+            "unit":"EA"
+        },
+        {
+            "status": "A",
+            "gdcode": "P004",
+            "gdname": "술독 하이볼 캔 멜론 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 935,
+            "unit":"EA"
+        },
+        {
+            "status": "A",
+            "gdcode": "P005",
+            "gdname": "술독 하이볼 캔 라임 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 2016,
+            "unit":"EA"
+        },
+        {
+            "status": "R",
+            "gdcode": "P005",
+            "gdname": "술독 하이볼 캔 라임 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 150,
+            "unit":"EA"
+        },
+        {
+            "status": "D",
+            "gdcode": "P005",
+            "gdname": "술독 하이볼 캔 라임 500ml *10",
+            "plcode": "P0100",
+            "whcode": "WH01",
+            "exptype": "O",
+            "quantity": 36,
+            "unit":"EA"
+        }                        
+    ]
+}

@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="selectDialog"
+		title="제품 목록"
+        searchPlaceholder="제품명"
+		items="{/MTMASTERSet}"
+		search=".onValueHelpSearch"
+		confirm=".onValueHelpClose"
+		cancel=".onValueHelpClose">
+		<StandardListItem title="{Gdname}" />
+	</SelectDialog>
+</core:FragmentDefinition>

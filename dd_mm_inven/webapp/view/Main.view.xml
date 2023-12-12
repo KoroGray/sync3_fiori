@@ -1,0 +1,122 @@
+<mvc:View controllerName="ddmminven.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:u="sap.uxap" xmlns:core="sap.ui.core" xmlns:fb="sap.ui.comp.filterbar" xmlns:t="sap.ui.table" xmlns:tnt="sap.tnt">
+    <Page id="page" title="{i18n>title}">
+    <core:Fragment fragmentName="ddmminven.view.Fragment.ValueHelpDialog"/>
+        <content>
+            <IconTabBar id="idIconTabBar"
+                        select=".onPress"
+                        class="sapUiResponsiveContentPadding"
+                        expanded="true">
+                <items>
+                    <IconTabFilter
+                        showAll="true"
+                        text="재고 구분">
+                        <Text text="재고 상태를 선택하십시오." />
+                    </IconTabFilter>
+                    <IconTabSeparator />
+                    <IconTabFilter
+                        icon="sap-icon://product"
+                        iconColor="Default"                        
+                        text="전체 재고"
+                        key="Products">
+                        <Text text="현재 창고에 보관된 모든 재고를 조회합니다." />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://product"
+                        iconColor="Positive"
+                        text="가용재고"
+                        key="Available">
+                        <Text text="현재 사용가능한 재고를 조회합니다." />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://shipping-status"
+                        iconColor="Critical"
+                        text="예약재고"
+                        key="Reserved">
+                        <Text text="출고 대기중인 재고를 조회합니다." />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://delete"
+                        iconColor="Negative"
+                        text="폐기재고"
+                        key="Disposed">
+                        <Text text="폐기 처리된 재고를 조회합니다." />
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+            <Table id="idTable" 
+                   mode="SingleSelectMaster" 
+                   selectionChange="onSelectionChange" 
+                   inset="false"
+                   growing="true"
+                   growingThreshold="10" 
+                   items="{ path: '/INVENTORYSet',
+                            sorter: { path: 'Status',
+                                      descending: false} }">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="재고 목록" level="H2"/>
+                            <ToolbarSpacer />
+                            <Input id="idInput" placeholder="공장" width="250px" showSuggestion="true" value="{PLANT>/Plcode}"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpRequest2">
+                                </Input>
+                            <Input id="idInput2" placeholder="제품명" width="250px" showSuggestion="true" value="{MTMASTER>/Gdname}"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpRequest"
+                                suggestionItems="{ path: '/MTMASTERSet' }">
+                                <suggestionItems>
+                                    <core:Item text="{MTMaster>Gdname}" />
+                                </suggestionItems> 
+                            </Input>
+                            <Button id="idBtn" text="조회" type="Emphasized" press="onPress" />
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="10%" hAlign="Center">
+                        <Text text="상품 상태" />
+                    </Column>
+                    <Column width="10%" hAlign="Center">
+                        <Text text="품목 코드" />
+                    </Column>
+                    <Column width="30%" hAlign="Begin">
+                        <Text text="품목명" />
+                    </Column>
+                    <Column width="10%" hAlign="Center">
+                        <Text text="공장 코드" />
+                    </Column>
+                    <Column width="10%" hAlign="Center">
+                        <Text text="창고 코드" />
+                    </Column>
+                    <Column width="10%" hAlign="Center">
+                        <Text text="유통기한 유무" />
+                    </Column>
+                    <Column width="10%" hAlign="Right">
+                        <Text text="실재고량" />
+                    </Column>
+                    <Column width="10%" hAlign="Begin">
+                        <Text text="단위" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>                         
+                            <tnt:InfoLabel text="{ path: 'Status', formatter: '.formatter.fnIconChange' }" 
+                            colorScheme= "{ parts: [{path: 'Status'}], formatter: '.formatter.fnInfoLabel'}"  />                                                                      
+                            <Text text="{Gdcode}" />                                     
+                            <Text text="{Gdname}" />       
+                            <Text text="{Plcode}" />                                                                      
+                            <Text text="{Whcode}" />                                     
+                            <Text text="{Exptype}" />
+                            <Text text="{Rinven}" />                                     
+                            <Text text="{Unit}" />                                            
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

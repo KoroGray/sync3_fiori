@@ -1,0 +1,37 @@
+<c:FragmentDefinition xmlns:c="sap.ui.core" xmlns="sap.m" xmlns:t="sap.ui.table">
+    <Dialog id="idDialog2" contentWidth="40%" contentHeight="50%" title="술독 공장 목록" draggable="true" resizable="true">
+        <content>
+            <t:Table 
+                rows="{value>value}" 
+                selectionMode="Single" 
+                selectionBehavior="RowOnly" 
+                rowSelectionChange="onRowSelectionChange" 
+                paste="onPaste" 
+                ariaLabelledBy="title"> 
+                <t:columns>
+                    <t:Column width="auto">
+                        <Label text="공장 목록" />
+                        <t:template>
+                            <Text text="{value>plcode}" wrapping="false" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="auto">
+                        <Label text="창고명" />
+                        <t:template>
+                            <Text text="{value>plname}" wrapping="false" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column width="auto">
+                        <Label text="창고 주소" />
+                        <t:template>
+                            <Text text="{value>pladr}" wrapping="false" />
+                        </t:template>
+                    </t:Column>       
+                </t:columns>
+            </t:Table>
+        </content>
+        <endButton>    
+            <Button id="idClose" text="닫기" type="Emphasized" press="onClose2"/>
+        </endButton>
+    </Dialog>
+</c:FragmentDefinition>

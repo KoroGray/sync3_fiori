@@ -1,0 +1,154 @@
+<mvc:View controllerName="ddsrmanage.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" 
+    xmlns:ux="sap.uxap" 
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:webc="sap.ui.webc.main"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:viz.data="sap.viz.ui5.data" 
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+    <ux:ObjectPageLayout id="ObjectPageLayout" useIconTabBar="true" upperCaseAnchorBar="false">
+    <ux:headerTitle>
+        <ux:ObjectPageHeader objectTitle="수불대장 조회 어플리케이션">
+        </ux:ObjectPageHeader>
+    </ux:headerTitle>
+
+    <ux:headerContent>
+        <fb:FilterBar id="objectFilter" 
+        filterContainerWidth="24rem"
+        persistencyKey="myPersKey" 
+        useToolbar="false" 
+        search=".onSearch"
+        showFilterConfiguration="false"
+        afterVariantLoad=".onAfterVariantLoad">
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem name="OrderDate" label="수불 연월" groupName="Group1" visibleInFilterBar="true">
+                    <fb:control>
+                        <!-- <DateRangeSelection displayFormat='yyyy-MM'
+                                            dateValue="{Erdat}"
+                                            secondDateValue="{Erdat}"/> -->
+                        <webc:DatePicker
+							id="DP10"
+							formatPattern="yyyy-MM"
+                            value="{Main>/Erdat}"
+							change="handleChange"/>                    
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem name="CustomerID" label="품목" groupName="Group1" visibleInFilterBar="true">
+                    <fb:control>
+                        <Input id="idInput" width="200px" 
+                            placeholder="제품명" 
+                            showValueHelp="true" 
+                            value="{Gdname}" 
+                            valueHelpRequest="onValueHelp"/>
+                    </fb:control>
+                </fb:FilterGroupItem>                    
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+    </ux:headerContent>
+            
+        <ux:sections>
+            <ux:ObjectPageSection titleUppercase="false" title="테이블">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection titleUppercase="false">
+                        <ux:blocks>        
+                            <Table id="idTable"
+                                inset="false"
+                                items="{ path: '/SRMANAGESet'}"
+                                growing="true"
+                                growingThreshold="50"
+                                mode="SingleSelectMaster">
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title text="수불대장" level="H2"/>
+                                            <ToolbarSpacer />                                            
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>                                
+                                <columns>
+                                    <Column>
+                                        <Text text="수불 일자" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="수불문서번호" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="품목 코드" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="품목명" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="수불 유형" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="입고량" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="출고량" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem vAlign="Middle">
+                                        <cells>                                           
+                                            <Text text="{ path: 'Erdat', formatter: '.formatter.fnDateChange'}" />                                                                      
+                                            <Text text="{Srdocu}" />                                     
+                                            <Text text="{Gdcode}" />     
+                                            <Text text="{Gdname}" />
+                                            <Text text="{ path: 'Srtype', formatter: '.formatter.fnTypeChange'}" />
+                                            <Text text="{ parts : [ {path : 'Quantity'}, {path : 'Srtype'} ], formatter: '.formatter.fnQuanChange1' }" />
+                                            <Text text="{ parts : [ {path : 'Quantity'}, {path : 'Srtype'} ], formatter: '.formatter.fnQuanChange2' }" />      
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>                
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+
+            <ux:ObjectPageSection titleUppercase="false" title="차트">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection titleUppercase="false">
+						<ux:blocks>
+							<viz:VizFrame vizType="pie"
+                                          legendVisible="true"
+                                          vizProperties="{
+                                            'title' : {
+                                                'visible' : true,
+                                                'text' : ''
+                                            },
+                                            'plotArea' : {
+                                                'drawingEffect' : 'glossy',
+                                                'dataLabel' : { visible: true, type: 'value'}
+                                            }
+                                        }">
+                                <viz:dataset>
+                                    <viz.data:FlattenedDataset data="{SRMANAGESet}">
+                                        <!-- X축 -->
+                                        <viz.data:dimensions>
+                                            <viz.data:DimensionDefinition name="연월" value="{Main>/?}" />
+                                        </viz.data:dimensions>
+
+                                        <!-- Y축 -->
+                                        <viz.data:measures>
+                                            <viz.data:MeasureDefinition name="입고" value="{Main>/?}" />
+                                            <viz.data:MeasureDefinition name="출고" value="{Main>/?}" />
+                                        </viz.data:measures>
+                                    </viz.data:FlattenedDataset>
+                                </viz:dataset>
+                                <viz:feeds>
+                                    <viz.feeds:FeedItem uid="categoryAxis" values="연월" type="Dimension"/> <!-- X축 -->
+                                    <viz.feeds:FeedItem uid="valueAxis" values="입고" type="Measure" /> <!-- Y축 -->
+                                    <viz.feeds:FeedItem uid="valueAxis" values="출고" type="Measure" /> <!-- Y축 -->                                    
+                                </viz:feeds>
+                            </viz:VizFrame> 
+						</ux:blocks>                        
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+        </ux:sections>
+	</ux:ObjectPageLayout>
+</mvc:View>

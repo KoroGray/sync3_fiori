@@ -1,0 +1,178 @@
+<mvc:View controllerName="ddmmsrmanage.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" 
+    xmlns:ux="sap.uxap"
+    xmlns:tnt="sap.tnt" 
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:viz.data="sap.viz.ui5.data" 
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+    <ux:ObjectPageLayout id="ObjectPageLayout" useIconTabBar="true" upperCaseAnchorBar="false" showHeaderContent="false">
+    <ux:headerTitle>
+        <ux:ObjectPageHeader objectTitle="{i18n>title}">
+        </ux:ObjectPageHeader>
+    </ux:headerTitle>
+
+    <ux:headerContent >
+        <fb:FilterBar id="objectFilter" 
+        filterContainerWidth="24rem"
+        persistencyKey="myPersKey" 
+        useToolbar="false"
+        showFilterConfiguration="false">
+        </fb:FilterBar>
+    </ux:headerContent>
+            
+        <ux:sections>
+            <ux:ObjectPageSection titleUppercase="false" title="수불대장">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection titleUppercase="false">
+                        <ux:blocks>        
+                            <Table id="idTable"
+                                inset="false"
+                                items="{ path: '/SRMANAGESet'}"
+                                growing="true"
+                                growingThreshold="20"
+                                mode="None">
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title text="수불대장" level="H2"/>
+                                            <ToolbarSpacer />
+                                            <DatePicker
+                                                id="idDate"
+                                                width="250px"
+                                                value="{
+                                                    'path': 'Main>/Erdat',
+                                                    'type': 'sap.ui.model.type.Date',
+                                                    'formatOptions': {
+                                                        'pattern': 'y년 MM월'
+                                                    }
+                                                }"
+                                                placeholder="수불 연월" />
+
+                                            <Input id="idInput" 
+                                            placeholder="제품명" 
+                                            width="250px" 
+                                            showSuggestion="true" 
+                                            value="{MTMASTER>/Gdname}"
+                                            showValueHelp="true"
+                                            valueHelpRequest=".onValueHelp"
+                                            suggestionItems="{ path: '/MTMASTERSet' }">
+                                            <suggestionItems>
+                                                <core:Item text="{MTMaster>Gdname}" />
+                                            </suggestionItems> 
+                                            </Input>
+                                            
+                                            <Button text="조회" type="Emphasized" press="onSearch" />                   
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>                                
+                                <columns>
+                                    <Column width='10%' hAlign="Center">
+                                        <Text text="수불 일자" />
+                                    </Column>
+                                    <Column width='10%' hAlign="Center">
+                                        <Text text="수불문서번호" />
+                                    </Column>
+                                    <Column width='10%' hAlign="Center">
+                                        <Text text="품목 코드" />
+                                    </Column>
+                                    <Column width='30%' hAlign="Begin">
+                                        <Text text="품목명" />
+                                    </Column>
+                                    <Column width='10%' hAlign="Center">
+                                        <Text text="수불 유형" />
+                                    </Column>
+                                    <Column width='10%' hAlign="Center">
+                                        <Text text="입고량" />
+                                    </Column>
+                                    <Column width='10%' hAlign="Center">
+                                        <Text text="출고량" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem vAlign="Middle">
+                                        <cells>                                           
+                                            <Text text="{ path: 'Erdat', formatter: '.formatter.fnDateChange'}" />                                                                      
+                                            <Text text="{Srdocu}" />                                     
+                                            <tnt:InfoLabel text="{Gdcode}"
+                                            colorScheme= "{ parts: [{path: 'Gdcode'}], formatter: '.formatter.fnInfoLabel1'}" />     
+                                            <Text text="{Gdname}" />
+                                            <tnt:InfoLabel text="{ path: 'Srtype', formatter: '.formatter.fnTypeChange' }" 
+                                            colorScheme= "{ parts: [{path: 'Srtype'}], formatter: '.formatter.fnInfoLabel2'}" />
+                                            <Text text="{ parts : [ {path : 'Quantity'}, {path : 'Srtype'} ], formatter: '.formatter.fnQuanChange1' }" />
+                                            <Text text="{ parts : [ {path : 'Quantity'}, {path : 'Srtype'} ], formatter: '.formatter.fnQuanChange2' }" />      
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>                
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+
+            <ux:ObjectPageSection titleUppercase="false" title="입출고량 차트">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection titleUppercase="false">
+						<ux:blocks>
+                            <VBox>
+                                <FlexBox alignItems="Start" justifyContent="SpaceBetween">
+                                    <Title text="월별 입출고 차트" class="sapUiSmallMarginEnd" />
+                                    <DatePicker
+                                        id="idDate2"
+                                        width="250px"
+                                        value="{
+                                            'path': 'Main>/Year',
+                                            'type': 'sap.ui.model.type.Date',
+                                            'formatOptions': {
+                                            'pattern': 'y년' } }"
+                                        placeholder="수불 년도"
+                                        change=".changeYear"
+                                        class="sapUiSmallMarginEnd" />
+                                </FlexBox>
+
+                                <viz:VizFrame id="idColumn"
+                                            vizType="column"
+                                            legendVisible="true"
+                                            uiConfig="{applicationSet:'fiori'}" 
+                                            selectData=".onSelectData"
+                                            vizProperties="{
+                                                'title' : {
+                                                    'visible' : false,
+                                                    'text' : ''
+                                                },
+                                                'plotArea' : {
+                                                    'drawingEffect' : 'glossy',
+                                                    'dataLabel' : { visible: true, type: 'value'}
+                                                }}"
+                                                width="100%">
+                                                
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset id="idDataSet" data="{/LEDGERSet}">
+                                            <!-- X축 -->
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition name="월별" value="{Srmonth}" />
+                                            </viz.data:dimensions>
+
+                                            <!-- Y축 -->
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition name="입고량" value="{Srstocked}" />
+                                                <viz.data:MeasureDefinition name="출고량" value="{Srrelease}" />
+                                            </viz.data:measures>
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <viz.feeds:FeedItem uid="categoryAxis" values="월별" type="Dimension"/> <!-- X축 -->
+                                        <viz.feeds:FeedItem uid="valueAxis" values="입고량" type="Measure" /> <!-- Y축 -->
+                                        <viz.feeds:FeedItem uid="valueAxis" values="출고량" type="Measure" /> <!-- Y축 -->                                    
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </VBox> 
+						</ux:blocks>                        
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+        </ux:sections>
+	</ux:ObjectPageLayout>
+</mvc:View>

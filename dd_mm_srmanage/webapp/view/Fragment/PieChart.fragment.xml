@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:viz="sap.viz.ui5.controls" xmlns:ux="sap.uxap" 
+    xmlns:viz.data="sap.viz.ui5.data" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <Dialog id="PieChart" title="">
+        <content>
+            <ComboBox id="idCombo" change="onSelectionChange" width="100%" selectionChange="onSelectionChange" visible="true" >
+                <items>
+                    <core:Item key="R" text="원자재"/>
+                    <core:Item key="A" text="부자재"/>
+                </items>
+            </ComboBox>          
+            <viz:VizFrame id="idChart"
+                            vizType="pie"
+                            legendVisible="true"
+                            vizProperties="{
+                            'title' : {
+                                'visible' : true,
+                                'text' : ''
+                            },
+                            'plotArea' : {
+                                'drawingEffect' : 'glossy',
+                                'dataLabel' : { visible: true, type: 'value'}
+                            }
+                        }">
+                <viz:dataset>
+                    <viz.data:FlattenedDataset id="idDataSet2" data="{/SRMANAGESet}">
+                        <!-- X축 -->
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="품목" value="{Gdname}" />
+                        </viz.data:dimensions>
+
+                        <!-- Y축 -->
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="수량" value="{Quantity}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="color" values="품목" type="Dimension" /> <!-- X축 -->
+                    <viz.feeds:FeedItem uid="size" values="수량" type="Measure" /> <!-- Y축 -->                                    
+                </viz:feeds>
+            </viz:VizFrame>
+
+        </content>
+        <endButton>    
+            <Button text="닫기" type="Emphasized" press="onClose"/>
+        </endButton>
+    </Dialog>    
+</core:FragmentDefinition> 
